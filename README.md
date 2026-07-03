@@ -277,9 +277,7 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## 📊 Version History
 
@@ -318,13 +316,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 If you find Quibly useful, please consider giving it a star ⭐ on GitHub!
 
-## 📈 Project Stats
 
-![GitHub stars](https://img.shields.io/github/stars/yourusername/quibly?style=social)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/quibly?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/yourusername/quibly?style=social)
-
----
 
 **Built with ❤️ using modern web technologies**
 
