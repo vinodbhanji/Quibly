@@ -1,0 +1,51 @@
+{
+  "name": "quibly-backend",
+  "version": "1.0.0",
+  "description": "Quibly Backend - Real-time communication platform server",
+  "module": "index.ts",
+  "type": "commonjs",
+  "private": true,
+  "author": "Quibly Team",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node src/index.js",
+    "dev:only": "bun run --hot src/index.js",
+    "build": "prisma generate",
+    "start": "npx prisma generate && node src/index.js",
+    "db:push": "npx prisma db push",
+    "db:migrate": "npx prisma migrate dev",
+    "db:status": "npx prisma migrate status",
+    "db:studio": "npx prisma studio"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.3.0",
+    "@prisma/client": "^6.19.3",
+    "@socket.io/redis-adapter": "^8.3.0",
+    "axios": "^1.13.2",
+    "bcryptjs": "^3.0.3",
+    "cheerio": "^1.1.2",
+    "cloudinary": "^2.9.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "google-auth-library": "^10.5.0",
+    "jsonwebtoken": "^9.0.3",
+    "kafkajs": "^2.2.4",
+    "livekit-server-sdk": "^2.15.0",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0",
+    "nodemailer": "^8.0.7",
+    "pg": "^8.17.1",
+    "prisma": "^6.19.3",
+    "redis": "^5.10.0",
+    "socket.io": "^4.8.3",
+    "tsx": "^4.21.0"
+  }
+}

@@ -1,0 +1,61 @@
+'use client'
+
+import { useQuery } from '@tanstack/react-query'
+import { apiGet } from '@/lib/api'
+
+export type Message = {
+  _id: string
+  channelId?: string | null
+  dmRoomId?: string | null
+  serverId?: string
+  senderId:
+  | string
+  | {
+    _id: string
+    username: string
+    avatar?: string | null
+  }
+  content: string
+  type?: 'TEXT' | 'FILE' | 'SYSTEM'
+  attachments?: any[]
+  metadata?: any
+  mentions?: string[]
+  createdAt: string
+  editedAt?: string | null
+  isPinned?: boolean
+  pinnedAt?: string | null
+  pinnedBy?: string | null
+  parentId?: string | null
+  parent?: {
+    _id: string
+    content: string
+    senderId: {
+      _id: string
+      username: string
+      avatar?: string | null
+    }
+  } | null
+  reactions?: {
+    id: string
+    emoji: string
+    userId: string | { _id: string, username: string, avatar?: string | null }
+    messageId: string
+    createdAt: string
+  }[]
+}
+
+
+export function useMessages(id: string | null, type: 'channel' | 'dm' = 'channel') {
+  return useQuery({
+    queryKey: ['messages', id],
+    queryFn: async () => {
+      if (!id) return []
+      const url = type === 'channel' ? `/message/${id}` : `/message/dm/${id}`
+      const messages = await apiGet<Message[]>(url)
+      return messages
+    },
+    enabled: !!id,
+    staleTime: 30 * 1000, // 30 seconds - messages change frequently
+    refetchOnWindowFocus: true,
+  })
+}

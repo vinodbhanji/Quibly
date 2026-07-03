@@ -1,0 +1,118 @@
+'use client'
+
+import { useCurrentUser } from '@/hooks/queries/useUserProfile'
+import UserProfileView from '@/components/profile/UserProfileView'
+import { useState } from 'react'
+import UserProfileModal from '@/components/profile/UserProfileModal'
+import { apiPut } from '@/lib/api'
+import { useAuthStore } from '@/lib/store/authStore'
+import { useQueryClient } from '@tanstack/react-query'
+
+
+export default function MyProfilePage() {
+  const { data: user, isLoading, refetch } = useCurrentUser()
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const queryClient = useQueryClient()
+
+  const handleProfileViewUpdate = (updatedData: any) => {
+    // Update Zustand store
+    useAuthStore.getState().updateUser(updatedData)
+
+    // Update query cache optimistically
+    queryClient.setQueryData(['users', 'current'], (old: any) => {
+      if (!old) return old
+      return { ...old, ...updatedData }
+    })
+
+    queryClient.setQueryData(['profile'], (old: any) => {
+      if (!old) return old
+      return { ...old, ...updatedData }
+    })
+
+    // Invalidate
+    queryClient.invalidateQueries({ queryKey: ['users', 'current'] })
+    queryClient.invalidateQueries({ queryKey: ['profile'] })
+  }
+
+  const handleUpdate = async (data: any) => {
+    try {
+      await apiPut('/user/profile', data)
+      await refetch()
+      setIsEditModalOpen(false)
+    } catch (error) {
+      console.error('Failed to update profile:', error)
+      throw error
+    }
+  }
+
+  const handleUploadAvatar = async (file: File) => {
+    const formData = new FormData()
+    formData.append('avatar', file)
+    await apiPut('/user/avatar', formData)
+    await refetch()
+  }
+
+  const handleUploadBanner = async (file: File) => {
+    const formData = new FormData()
+    formData.append('banner', file)
+    await apiPut('/user/banner', formData)
+    await refetch()
+  }
+
+  const handleDeleteAvatar = async () => {
+    await apiPut('/user/avatar/delete', {})
+    await refetch()
+  }
+
+  const handleDeleteBanner = async () => {
+    await apiPut('/user/banner/delete', {})
+    await refetch()
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#0a0a0c] via-[#111114] to-[#0a0a0c] flex items-center justify-center">
+        <div className="text-white">Loading your profile...</div>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#0a0a0c] via-[#111114] to-[#0a0a0c] flex items-center justify-center">
+        <div className="text-white">Please log in to view your profile</div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-[#0a0a0c] via-[#111114] to-[#0a0a0c] py-8 px-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-white mb-2">My Profile</h1>
+          <p className="text-gray-400">View and customize your profile with tabs!</p>
+        </div>
+
+        <UserProfileView 
+          user={user} 
+          isOwnProfile={true}
+          onEdit={() => setIsEditModalOpen(true)}
+          onUpdate={handleProfileViewUpdate}
+        />
+
+        {isEditModalOpen && (
+          <UserProfileModal
+            isOpen={isEditModalOpen}
+            onClose={() => setIsEditModalOpen(false)}
+            user={user}
+            onUpdate={handleUpdate}
+            onUploadAvatar={handleUploadAvatar}
+            onUploadBanner={handleUploadBanner}
+            onDeleteAvatar={handleDeleteAvatar}
+            onDeleteBanner={handleDeleteBanner}
+          />
+        )}
+      </div>
+    </div>
+  )
+}

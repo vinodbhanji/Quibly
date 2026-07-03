@@ -1,0 +1,359 @@
+@import "tailwindcss";
+
+:root {
+  /* Professional Dark Inbox Theme */
+  --color-obsidian: #0a0a0a;
+  --color-dark-bg: #141414;
+  --color-dark-surface: #1a1a1a;
+  --color-dark-elevated: #202020;
+  --color-dark-hover: #2a2a2a;
+
+  --color-accent-blue: #5865f2;
+  --color-accent-blue-hover: #4752c4;
+  --color-accent-blue-light: #7289da;
+
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #b4b4b4;
+  --color-text-muted: #808080;
+  --color-text-dim: #5a5a5a;
+
+  --color-border: #2a2a2a;
+  --color-border-subtle: #1f1f1f;
+
+  --gradient-primary: linear-gradient(135deg, #5865f2 0%, #7289da 100%);
+  --gradient-hover: linear-gradient(135deg, #4752c4 0%, #5865f2 100%);
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--color-obsidian);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a3a;
+}
+
+/* Selection */
+::selection {
+  background: rgba(88, 101, 242, 0.3);
+  color: var(--color-text-primary);
+}
+
+/* Gradient Text Utility */
+.gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass Morphism */
+.glass {
+  background: rgba(20, 20, 20, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border-subtle);
+}
+
+/* Subtle Hover Effects */
+.hover-lift {
+  transition: all 0.2s ease;
+}
+
+.hover-lift:hover {
+  background: var(--color-dark-hover);
+}
+
+/* Animations */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.03) 50%,
+      transparent 100%);
+  background-size: 1000px 100%;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+/* LiveKit Custom Styles */
+.lk-video-conference {
+  height: 100% !important;
+  background-color: var(--color-dark-bg) !important;
+}
+
+.lk-grid-layout {
+  padding: 1rem !important;
+  gap: 1rem !important;
+}
+
+.lk-participant-tile {
+  border-radius: 0.75rem !important;
+  overflow: hidden !important;
+  background: var(--color-dark-elevated) !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+.lk-participant-metadata {
+  background: rgba(10, 10, 10, 0.8) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.lk-participant-name {
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  color: var(--color-text-primary) !important;
+}
+
+.lk-control-bar {
+  background: var(--color-dark-surface) !important;
+  border-top: 1px solid var(--color-border) !important;
+  padding: 0.75rem 1rem !important;
+}
+
+.lk-button {
+  border-radius: 0.5rem !important;
+  transition: all 0.2s !important;
+  background: var(--color-dark-elevated) !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+.lk-button:hover {
+  background: var(--color-dark-hover) !important;
+  border-color: var(--color-border) !important;
+}
+
+/* Badge Styles */
+.badge-green {
+  background: rgba(59, 165, 93, 0.15);
+  color: #3ba55d;
+  border: 1px solid rgba(59, 165, 93, 0.3);
+}
+
+.badge-blue {
+  background: rgba(88, 101, 242, 0.15);
+  color: #5865f2;
+  border: 1px solid rgba(88, 101, 242, 0.3);
+}
+
+.badge-orange {
+  background: rgba(250, 166, 26, 0.15);
+  color: #faa61a;
+  border: 1px solid rgba(250, 166, 26, 0.3);
+}
+
+/* Typing Indicator Animations */
+@keyframes bounce-dot {
+
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+.animate-bounce-dot {
+  animation: bounce-dot 1.4s infinite ease-in-out;
+}
+
+.animation-delay-0 {
+  animation-delay: 0s;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+/* Loading Screen Animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes gradient-drift {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    filter: hue-rotate(10deg);
+  }
+  100% {
+    filter: hue-rotate(0deg);
+  }
+}
+
+.reveal-up {
+  animation: reveal-up 0.65s ease-out both;
+}
+
+.animate-float-soft {
+  animation: float-soft 8s ease-in-out infinite;
+}
+
+.animate-gradient-drift {
+  animation: gradient-drift 12s ease-in-out infinite;
+}
+
+/* Soft grid overlay for subtle structure */
+.soft-grid {
+  position: relative;
+}
+.soft-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 90px 90px;
+  mask-image: radial-gradient(circle at 50% 40%, rgba(0,0,0,0.35), transparent 60%);
+  mix-blend-mode: soft-light;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal-up,
+  .animate-float-soft,
+  .animate-gradient-drift,
+  .animate-shimmer,
+  .animate-fade-in,
+  .animate-bounce-dot,
+  .animate-float,
+  .animate-glow,
+  .animate-scale-in {
+    animation: none !important;
+  }
+}
+
+/* Floating animation for background elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.02);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Glow pulse for auth cards */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(88, 101, 242, 0.05), 0 0 60px rgba(88, 101, 242, 0.02);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(88, 101, 242, 0.1), 0 0 80px rgba(88, 101, 242, 0.05);
+  }
+}
+
+.animate-glow {
+  animation: glow 4s ease-in-out infinite;
+}
+
+/* Scale-in for modals */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.15s ease-out;
+}
